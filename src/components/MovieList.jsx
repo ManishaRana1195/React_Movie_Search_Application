@@ -5,7 +5,7 @@ function MovieList({ results }) {
   return (
     <section className="results">
       {results.map(result => (
-        <MovieCard movieInformation={result} />
+        <MovieCard key={result.imdbID} movieInformation={result} />
       ))}
     </section>
   );
