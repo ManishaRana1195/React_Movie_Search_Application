@@ -1,10 +1,10 @@
 import React from "react";
 
-function MovieCard({ movieInformation }) {
+function MovieCard({ result, onPopClick }) {
   return (
-    <div className="movieCard">
-      <img src={movieInformation.Poster} alt="img" />
-      <h3>{movieInformation.Title}</h3>
+    <div className="movieCard" onClick={() => onPopClick(result.imdbID)} >
+      <img src={result.Poster} alt="img" />
+      <h3>{result.Title}</h3>
     </div>
   );
 }

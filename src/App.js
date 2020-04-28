@@ -2,9 +2,10 @@ import React, { useState } from "react";
 import SearchBar from "./components/SearchBar";
 import axios from "axios";
 import MovieList from "./components/MovieList";
+import Popup from "./components/Popup";
 
 function App() {
-  const movie_api_url = "http://www.omdbapi.com/?i=tt38961198&apikey=9565096a";
+  const movie_api_url = "http://www.omdbapi.com/?apikey=9565096a";
 
   const [state, setState] = useState({
     inputMovieName: "",
@@ -35,16 +36,16 @@ function App() {
   const openPopup = id => {
     axios(movie_api_url + "&i=" + id).then(({ data }) => {
       let movieDetails = data;
-
       setState(prevState => {
-        return { ...prevState, state: movieDetails };
+        return { ...prevState, selected: movieDetails };
       });
+
     });
   };
 
   const closePop = () => {
     setState(prevState => {
-      return { ...prevState, state: {} };
+      return { ...prevState, selected: {} };
     });
   };
 
@@ -58,11 +59,12 @@ function App() {
           handleInput={handleInputInSearch}
           handleSearchCall={searchMovie}
         />
-        <MovieList
-          results={state.results}
-          onPopupClick={openPopup}
-          onPopupClose={closePop}
-        />
+        <MovieList results={state.results} onPopupClick={openPopup} />
+        {typeof state.selected.Title != "undefined" ? (
+          <Popup selected={state.selected} onPopupClose={closePop} />
+        ) : (
+          false
+        )}
       </main>
     </div>
   );
